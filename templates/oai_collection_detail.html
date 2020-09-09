@@ -1,0 +1,74 @@
+<!-- collection_detail.html -->
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block page_title %}Collections{% endblock page_title %}
+
+{% block page_header %} <h3><span><sup class="badge badge-default">Collection</sup></span></h3> {% endblock page_header %}
+
+{% block content %}
+	
+	{% if messages %}
+	    {% for message in messages %}
+	    <h5{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</h5>
+	    {% endfor %}
+	{% endif %}
+
+	<div>
+		<a id="harvest_btn" class="btn btn-md btn-default" href="#">Harvest</a> <span>last harvested on {{ object.last_harvest }}</span> 		
+	</div>
+
+	<div id="modalwait" class="modal" tabindex="-1" role="dialog" data-backdrop="static">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-body text-center">
+	      	<p id="spinwait"><i class="fas fa-spinner fa-4x fa-spin"></i></p> 
+	      	<p>Harvesting records from library repository, please hold tight!</p>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+	<h3>{{ object.name }} <small><a href="{% url 'collection' object.pk %}">Read View</a></small></h3>
+
+	<h5></h5>
+	<h5> OAI Identifier: {{ object.identifier }}</h5>
+	<h5> Community: {{ object.community }}</h5>
+	<h5> Number of records harvested: {{ num_records }}</h5>
+	<h5> Created on: {{ object.created }}</h5>
+	<h5> Modified on: {{ object.modified }}</h5>
+
+	<h3><strong>Records</strong></h3>
+	
+	{% for i in records %}
+	<h4><strong>{{ i }}</strong> </h4>
+		<div>
+			<h5><a href="{% url 'item_full' i.pk %}">view record</a></h5>
+			{% if i.hdr_datestamp > i.modified %} <h3>Out of date</h3> {% endif %}
+			<h5> Modified on: {{ i.modified }}</h5>
+			<h5> Updated on: {{ i.hdr_datestamp }}</h5>
+			<h5> Last Harvested on: {{ i.modified }}</h5>
+		</div>
+		{% for j in i.as_display_dict.items %}
+			<p><strong>{{ j.0 }}</strong>: {% for k in j.1 %}{{ k }}{% endfor %}</p>
+		{% endfor %}
+	{% endfor %}
+{% endblock content %}
+
+{% block js_include %}
+<script type="text/javascript">
+jQuery(function($) {
+	$("#harvest_btn").click(function() {
+
+		$('#modalwait').modal('toggle');
+		// 
+		$.get("{% url 'oai_harvest_collection' object.identifier %}", function(data, status) {
+			console.log(data);
+			$('#modalwait').modal('toggle');
+			location.reload()
+		});
+		// $("#spinwait").css("display", "inline");
+	});
+});
+</script>
+{% endblock js_include %}

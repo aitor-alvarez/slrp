@@ -1,0 +1,13 @@
+<!-- dissertation_view.html -->
+{% extends 'base.html' %}
+
+{% block page_header %}<h2>{{ object.title }}</h2>{% endblock page_header %}
+
+{% block content %}
+<div class="row">
+	<div class="col-md-12">
+		Details...
+		{{ object }}
+	</div>
+</div>		
+{% endblock content %}

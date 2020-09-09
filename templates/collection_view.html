@@ -1,0 +1,94 @@
+<!-- collection_view.html -->
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+
+{% block page_header %}
+<h4><i class="fa fa-caret-left"></i> <a href="{% url 'previous_issues' %}" class="static_a_display">Previous Issues</a></h4>
+
+<h2>{{ title.0 }} {% if user.is_staff %}<small><a class="btn btn-xs btn-default" href="{% url 'oai_collection' object.pk %}">Update</a></small>{% endif %}</h2>
+<h3><strong>{{ title.1 }}</strong></h3>
+{% endblock page_header %}
+
+{% block content %}	
+
+	<div class="row">
+		<div class="col-md-6">
+			{% if toc.Preface %}<h4 class="border-space">&nbsp;</h4>{% endif %}
+
+			{% for sub_type, data in toc.Preface.items %} 
+				
+				{% for doc in data.records %}
+					<div class="row">
+						<div class="col-md-11"> 
+							<a href="{{ doc.0.get_absolute_url }}" class="static_a_display">
+								<strong>{{ doc.0 }}</strong>
+								<p class="small">{% for j in doc.1%} <em>{{ j }}{% if not forloop.last %}; {% endif %}</em> {% endfor %}</p>
+							</a>
+						</div>
+						<div class="col-md-1"></div>
+					</div>
+				{% endfor %}
+			{% endfor %}
+
+			{% if toc.Article %}<h4 class="border-space">Articles</h4>{% endif %}
+			{% for sub_type, data in toc.Article.items %} 
+				<strong>{{ sub_type }}</strong>
+				<p class="small">{% if data.editors %}Edited by{% endif %} {% for j in data.editors%} <em>{{ j }}{% if not forloop.last %}; {% endif %}</em> {% endfor %}</p>
+				{% for doc in data.records %}
+					<div class="row">
+						<div class="{% if sub_type %}col-md-9 col-md-offset-1 {% else %}col-md-11{% endif %}"> 
+							<a href="{{ doc.0.get_absolute_url }}" class="static_a_display">
+								<strong>{{ doc.0 }}</strong>
+								<p class="small">{% for j in doc.1%} <em>{{ j }}{% if not forloop.last %}; {% endif %}</em> {% endfor %}</p>
+								<p class="small">{{ doc.2.0|truncatewords:20|truncatewords:20 }} </p>
+							</a>
+						</div>
+						<div class="col-md-1 {% if sub_type %}col-md-push-1{% endif %}"><em>{{ doc.3 }}</em></div>
+					</div>
+				{% endfor %}
+			{% endfor %}
+		</div>
+		<div class="col-md-6">
+			{% if toc.Column %}<h4 class="border-space">Columns</h4>{% endif %}
+			{% for sub_type, data in toc.Column.items %} 
+				<strong>{{ sub_type }}</strong>
+				<p class="small">{% if data.editors %}Edited by{% endif %} {% for j in data.editors%} <em>{{ j }}{% if not forloop.last %}; {% endif %}</em> {% endfor %}</p>
+				{% for doc in data.records %}
+					<div class="row">
+						<div class="{% if sub_type %}col-md-9 col-md-offset-1 {% else %}col-md-11{% endif %}"> 
+							<a href="{{ doc.0.get_absolute_url }}" class="static_a_display">
+								<strong>{{ doc.0 }}</strong>
+								<p class="small">{% for j in doc.1%} <em>{{ j }}{% if not forloop.last %}; {% endif %}</em> {% endfor %}</p>
+								<p class="small">{{ doc.2.0|truncatewords:20 }} </p>
+							</a>
+						</div>
+						<div class="col-md-1 {% if sub_type %}col-md-push-1{% endif %}"><em>{{ doc.3 }}</em></div>
+					</div>
+				{% endfor %}
+			{% endfor %}
+
+
+		
+			{% if toc.Review %}<h4 class="border-space">Reviews</h4>{% endif %}
+			{% for sub_type, data in toc.Review.items %}
+				<strong>{{ sub_type }}</strong>
+				<p class="small">{% if data.editors %}Edited by{% endif %} {% for j in data.editors%} <em>{{ j }}{% if not forloop.last %}; {% endif %}</em> {% endfor %}</p>
+				{% for doc in data.records %}
+					<div class="row">
+						<div class="{% if sub_type %}col-md-9 col-md-offset-1 {% else %}col-md-11{% endif %}"> 
+							<a href="{{ doc.0.get_absolute_url }}" class="static_a_display">
+								<strong>{{ doc.0 }}</strong>
+								<p class="small">{% for j in doc.1%} <em>{{ j }}{% if not forloop.last %}; {% endif %}</em> {% endfor %}</p>
+								<p class="small">{{ doc.2.0|truncatewords:20 }} </p>
+							</a>
+						</div>
+						<div class="col-md-1 {% if sub_type %}col-md-push-1{% endif %}"><em>{{ doc.3 }}</em></div>
+					</div>
+				{% endfor %}
+			{% endfor %}
+		</div>
+
+	</div>
+
+{% endblock content %}

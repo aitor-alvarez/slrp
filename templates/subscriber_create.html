@@ -1,0 +1,21 @@
+<!-- subcriber_create.html -->
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block page_header %}
+	<h2>Subscribe to the LLT</h2> 
+{% endblock page_header %}
+
+{% block content %}
+<div class="row">
+	<div class="col-md-9">
+		<form method="post" action="">{% csrf_token %}
+			{{ form | crispy }}
+			<div class="g-recaptcha" data-sitekey="6LekjCYUAAAAAAiL3fvUMpq0Us9_YVBzYOFo9zJu"></div>
+			<p></p>
+			<button type="submit" class="btn btn-md btn-block btn-success">Subscribe</button>
+		</form>
+	</div>
+	<div class="col-md-3">{% include 'base-side-menu.html' %}</div>
+</div>		
+{% endblock content %}

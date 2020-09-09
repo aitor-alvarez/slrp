@@ -1,0 +1,22 @@
+<!-- subcriber_list.html -->
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block page_header %}
+	<h2>Subscriber List</h2> 
+{% endblock page_header %}
+
+{% block content %}
+<div class="row">
+	<div class="col-md-9">
+		<p><a href="{% url 'subscriber_list_csv' %}">Download subscriber list as a csv file.</a></p>
+		{% for i in index %}
+			<a href="{% url 'subscriber_list' i %}">{{ i }}</a> 
+		{% endfor %}
+		
+		{% for i in object_list %}<p>{{ i.first_name }} {{ i.last_name }}  <strong>{{ i.email }}</strong></p>{% endfor %}
+		
+	</div>
+	<div class="col-md-3">{% include 'base-side-menu.html' %}</div>
+</div>		
+{% endblock content %}

@@ -1,0 +1,13 @@
+<!-- page_view.html -->
+{% extends 'base.html' %}
+
+{% block page_header %}
+	<h2>{{ page.title }} {% if user.is_staff %}<small><a href="{{ admin_edit }}">edit</a></small>{% endif %}</h2> 
+{% endblock page_header %}
+
+{% block content %}
+<div class="row">
+	<div class="col-md-9">{{ page.content|safe }}</div>
+	<div class="col-md-3">{% include 'base-side-menu.html' %}</div>
+</div>		
+{% endblock content %}

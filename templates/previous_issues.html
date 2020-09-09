@@ -1,0 +1,27 @@
+<!-- previous_issues.html -->
+{% extends 'base.html' %}
+
+{% block page_header %}
+	<h2>Previous Issues</h2> 
+{% endblock page_header %}
+
+{% block content %}
+<div class="row">
+	<div class="col-md-9">
+		<ul class="list-unstyled">
+		{% for num, volume in volumes.items %}
+			<li>
+				<h4><i class="fa fa-caret-right"></i> {{ volume.0.name|slice:":9"}}</h4>
+				<ul class="list-unstyled">
+				{% for j in volume %}
+					<li><p><a href="{% url 'collection' j.identifier %}">{{ j.name }}</a></p></li>
+				{% endfor %}
+				</ul>
+			</li>
+		{% endfor %}
+		</ul>			
+	</div>
+
+	<div class="col-md-3">{% include 'base-side-menu.html' %}</div>
+</div>		
+{% endblock content %}

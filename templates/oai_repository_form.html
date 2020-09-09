@@ -1,0 +1,22 @@
+<!-- repository_form.html -->
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block page_header %}  {% endblock page_header %}
+
+{% block content %}
+
+	{% if messages %}
+	    {% for message in messages %}
+	    	<h5{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</h5>
+	    {% endfor %}
+	{% endif %}
+
+	<h2> {{ view_type|title }} Institutional Repository {{ object.name }}</h2>
+	<form action="" method="post">{% csrf_token %}
+    	{{ form.as_p }}
+    	<input type="submit" value="{{ view_type|title }}" />
+	</form>
+	
+
+{% endblock content %}

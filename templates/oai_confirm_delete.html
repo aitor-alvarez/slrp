@@ -1,0 +1,20 @@
+<!-- confirm_delete.html -->
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block page_header %} {% endblock page_header %}
+
+{% block content %}
+
+	{% if messages %}
+	    {% for message in messages %}
+	    <h5{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</h5>
+	    {% endfor %}
+	{% endif %}
+	
+	<h2>Are you sure you want to delete "{{ object }}"?</h2>
+	<form action="" method="post">{% csrf_token %}
+	    <input type="submit" value="Confirm" />
+	</form>
+
+{% endblock content %}

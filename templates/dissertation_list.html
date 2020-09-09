@@ -1,0 +1,17 @@
+<!-- dissertation_list.html -->
+{% extends 'base.html' %}
+
+{% block page_header %}
+	<h2>Dissertations {% if user.is_staff %}<small><a href="{{ admin_add }}">add</a></small>{% endif %}</h2> 
+{% endblock page_header %}
+
+{% block content %}
+<div class="row">
+	<div class="col-md-9">
+		<ul class="list-unstyled">{% for i in object_list %} <li><a href="{% url 'dissertation_view' i.pk %}">{{ i }}</a></li> {% endfor %}</ul>
+	</div>
+	<div class="col-md-3">{% include 'base-side-menu.html' %}</div>
+</div>		
+{% endblock content %}
+
+

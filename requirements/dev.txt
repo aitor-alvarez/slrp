@@ -1,0 +1,6 @@
+# virtual environment --> nflrcllt
+# requirements/dev.txt
+# run pip install -r requirements/dev.txt to load requirements specific to development virtual envs
+
+-r base.txt
+django-debug-toolbar==1.8

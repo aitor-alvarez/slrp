@@ -1,0 +1,3 @@
+{{ object.element_type }}
+{{ object.element_data }}
+{{ object.record }}

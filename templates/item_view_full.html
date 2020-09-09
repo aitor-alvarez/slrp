@@ -1,0 +1,27 @@
+<!-- item_view.html -->
+{% extends 'base.html' %}
+
+{% block page_header %}
+<h4><i class="fa fa-caret-left"></i> <a href="{% url 'collection' object.hdr_setSpec.pk %}">{{ object.hdr_setSpec }}</a> <i class="fa fa-caret-left"></i> <a href="{% url 'item' object.pk %}">{{ object }}</a></h4>
+{% endblock page_header %}
+
+{% block content %}
+
+<div class="row">
+	<div class="col-md-10 col-md-offset-1">
+		<h3>{{ object }}</h3>
+		<dl class="">
+			{% if object.hdr_datestamp > object.modified %} <h3>Out of date</h3> {% endif %}
+			<dt class="metadata">Repository record updated on:</dt> <dd>{{ object.hdr_datestamp }}</dd>
+			<dt class="metadata">Database record updated on:</dt><dd>{{ object.modified }}</dd>
+			<dt class="metadata">Last Harvested on:</dt> <dd>{{ object.modified }}</dd>
+		</dl>
+		<dl class="">
+		{% for i, j in item_data.items %}
+			<dt class="metadata">{{ i }}:</dt><dd>{% for k in j %} {{k}} {% endfor %}</dd>
+		{% endfor %}
+		</dl>
+	</div>
+</div>
+		
+{% endblock content %}

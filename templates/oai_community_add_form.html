@@ -1,0 +1,23 @@
+<!-- community_form.html -->
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block page_title %}Add New Community Collection{% endblock page_title %}
+
+{% block page_header %}  {% endblock page_header %}
+
+{% block content %}
+
+	{% if messages %}
+	    {% for message in messages %}
+	    <h5>{{ message }}</h5>
+	    {% endfor %}
+	{% endif %}
+	
+	<form action="" method="post">{% csrf_token %}
+    	{{ form.as_p }}
+
+    	<input type="submit" value="Add Community Collection" />
+	</form>
+
+{% endblock content %}

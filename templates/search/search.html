@@ -1,0 +1,102 @@
+<!-- search.html -->
+{% extends 'base.html' %}
+{% load highlight %}
+
+
+{% block page_header %}
+<h2 id="top" class="text-center">Search</h2>
+{% endblock page_header %}
+
+{% block content %}    
+    <div class="col-md-10 col-md-offset-1">
+        <form method="get" action="{% url 'haystack_search' %}" class="form-inline text-" role="search">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search for..." name="q" value="{{query}}">
+                <span class="input-group-btn">
+                    <button type="submit" class="btn btn-md" type="button"><i class="fa fa-search"></i></button>
+                </span>
+            </div>            
+        </form>
+    </div>
+
+    <div class="col-md-10 col-md-offset-1" style="padding-top: 10px">
+        <ul class="nav nav-pills">
+            <li><a href="#keylist" class="btn btn-xs btn-default static_a_display filter-btn" data-toggle="collapse"> <i class="fa fa-caret-down"></i> <strong>Browse by keyword?</strong></a></li>
+            <li><a href="#authorlist" class="btn btn-xs btn-default static_a_display filter-btn" data-toggle="collapse"> <i class="fa fa-caret-down"></i> <strong>Browse by author?</strong></a></li>
+        </ul>        
+        
+        <!--keyword listing -->
+        <p>
+            <div id="keylist" class="row well collapse filter-terms" style="background-color: #fff">
+                {% for i in keytable %}
+                    <div class="col-md-3 text-left">
+                        <ul class="list-unstyled center-block">
+                        {% for j in i %}
+                            <li><p><a href="{% url 'haystack_search' %}?q={{j}}" class="static_a_display">{{ j }}</a></p></li>
+                        {% endfor %}
+                        </ul>
+                    </div>
+                {% endfor %}
+            </div>
+        </p>
+
+        <!--author listing -->
+        <p>
+            <div id="authorlist" class="row well collapse filter-terms" style="background-color: #fff">
+
+                {% for i in authortable %}                       
+                    {% ifchanged i.1|slice:":1"|upper %}
+                        <a href="#{{ i.1|slice:":1"|upper }}">{{ i.1|slice:":1"|upper }}</a>
+                    {% endifchanged %}
+                {% endfor %}
+
+                <div class="col-md-2 text-left">   
+                    <ul class="list-unstyled center-block">               
+                    {% for i in authortable %}                       
+                        {% ifchanged i.1|slice:":1"|upper %}
+                            <h3 id="{{ i.1|slice:":1"|upper }}">
+                                {{ i.1|slice:":1"|upper }} 
+                                {% if not forloop.first %}<a href="#top" class="small"><i class="fa fa-arrow-up"></i> top </a>{% endif %}
+                            </h3>
+                        {% endifchanged %}
+                        <li><p><a href="{% url 'haystack_search' %}?q={{i.1}}" class="static_a_display">{{ i.0 }} {{ i.1 }}</a></p></li>
+                    {% endfor %}
+                    </ul>
+                </div>                
+            </div>
+        </p>
+    </div>
+
+    <div class="col-md-10 col-md-offset-1">        
+        {% if query %}
+            <h3>Showing {{ object_list|length }} Search  Result{{ object_list|length|pluralize }} for <span class="label label-default">{{ query }}</span></h3>
+            <p>
+                <dl>
+                {% for result in object_list %}
+                        <dt><a href="{{ result.object.get_absolute_url }}" class="static_a_display">{{ result.object }}</a> (in <a href="{% url 'collection' result.object.hdr_setSpec.identifier %}"> {{ result.object.hdr_setSpec.name|slice:"0:18" }}</a>)</dt>
+                        <dd>
+                            <p>by {% for i in result.object.get_readable_authors %} <a href="{% url 'haystack_search' %}?q={{i}}" title="Search articles for this author.">{{ i }}</a>{% if not forloop.last %}, {% endif %} {% endfor %}
+                            </p>
+                        </dd>
+                {% empty %}
+                    <p>No results found.</p>
+                {% endfor %}
+                </dl>
+            </p>            
+        {% else %}
+            {# Show some example queries to run, maybe query syntax, something else? #}
+        {% endif %}
+    </div>
+{% endblock content %}
+
+{% block js_script %}
+<script type="text/javascript">
+    jQuery(function($) { 
+        $(document).ready(function() {
+            $('.filter-terms').on('show.bs.collapse', function () {
+                $('.filter-terms').collapse( "hide" );
+            });        
+        });
+    });   
+</script>
+{% endblock js_script %}

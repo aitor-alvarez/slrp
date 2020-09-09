@@ -1,0 +1,118 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,400,300,600' rel='stylesheet' type='text/css'> 
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
+
+
+    <!-- <script src="https://use.fontawesome.com/0d555f8c65.js"></script>-->
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    
+    <!-- Site-wide css -->
+    <link href="{% static 'css/base.css' %}" rel="stylesheet">
+
+    <!-- Placeholder for page-level css includes -->
+    {% block css_include %} {% endblock css_include %}
+
+    <title>{% block page_title %}{% endblock page_title %} Second Language Research & Practice</title>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+</head>
+
+<body>
+
+    <!-- Fixed navbar content -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-menu" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                
+                <ul class="nav navbar-nav">
+                    <li><a class="navbar-brand" href="{% url 'home' %}"><img height="70px" style="margin-top: 0px; margin-left:15px" src="{% static 'img/aausc-logo.png' %}"></a></li>
+                    <li>
+                        <h2>Second Language Research & Practice </h2>
+                        <p style="width: 480px"><i>A refereed journal addressing postsecondary language education from theoretical, empirical, and practical perspectives.</i></p>
+                    </li>  
+                </ul>
+            </div>
+
+            <div class="collapse navbar-collapse" id="main-menu" style="background-color: #fff">
+
+
+                <form class="navbar-form navbar-right" method="get" action="{% url 'haystack_search' %}">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search for..." name="q" value="{{query}}">
+                    </div>
+                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                </form> 
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'page_slug_view' 'about' %}">About</a></li>
+                    <li><a href="{% url 'page_slug_view' 'people' %}">People</a></li>
+                    <li><a href="{% url 'page_slug_view' 'contact' %}">Contact</a></li>
+                </ul>                
+            </div><!-- /.navbar-collapse -->             
+        </div><!-- /.container-fluid -->
+    </nav>
+    <!-- End navbar content -->
+    
+    
+
+    <!-- Page content -->
+    <div class="container-fluid">
+        {% block submenu %}<div class="row"><div class="col-md-12 submenu"></div></div>{% endblock %} 
+        
+        <div class="row">
+            <div class="col-md-12">{% block page_header %}{% endblock page_header %}
+            {% if messages %}
+                {% for message in messages %}
+                <div class="{% if message.tags %}bg-{{ message.tags }} {% endif %}alert alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                     <p>{{ message }}</p>
+                </div>
+                {% endfor %}
+            {% endif %}
+            </div>
+        </div>
+    
+        {% block content %} {% endblock content %}
+    </div>
+    <!-- End page content -->
+
+
+    <!-- Footer -->
+    <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+        <div id="footer" class="container-fluid text-muted">
+            Web application programming and design: Richard Medina - Site maintained by the <a href="https://clt.manoa.hawaii.edu" target="_blank">Center for Language & Technology</a>, University of Hawai‘i at Mānoa <a href="{% url 'admin:index' %}"><i class="fa fa-lock"></i></a>
+        </div>
+    </div>
+  
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+    
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    
+    <!-- Placeholder for page level javascript includes -->
+    {% block js_include %} {% endblock js_include %}
+
+    <!-- Placeholder for page level javascript code -->
+    {% block js_script %} {% endblock js_script %}
+
+</body>
+</html>

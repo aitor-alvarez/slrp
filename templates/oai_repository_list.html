@@ -1,0 +1,28 @@
+<!-- repository_list.html -->
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block page_title %}Libraries{% endblock page_title %}
+
+{% block page_header %}  {% endblock page_header %}
+
+{% block content %}
+
+	{% if messages %}
+	    {% for message in messages %}
+	    <h5{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</h5>
+	    {% endfor %}
+	{% endif %}
+	<h2> 
+		Institutional Repositories 
+		<small><a href="{% url 'oai_repository_add' %}">add new</a></small>
+	</h2>
+	{% for i in object_list %}
+		<h3>
+			<small><a href="{% url 'oai_repository_edit' i.id %}">edit</a></small>
+			<small><a href="{% url 'oai_repository_delete' i.id %}">remove</a></small>
+			<a href="{{ i.get_absolute_url }}">{{ i.name }}</a>
+			<small> {{ i.base_url }} </small>
+		</h3>
+	{% endfor %}
+{% endblock content %}

@@ -1,0 +1,13 @@
+<!-- community_view.html -->
+{% extends 'base.html' %}
+
+{% block page_header %}{% endblock page_header %}
+
+{% block content %}
+	<h4> {{ object }} </h4>
+	
+	{% for i in collections %}
+		<h5><a href="{% url 'collection' i.identifier %}"> {{ i }} </a></h5>
+	{% endfor %}
+
+{% endblock content %}
