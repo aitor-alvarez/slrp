@@ -1,9 +1,7 @@
 from django.conf.urls import include, url
 from django.contrib import admin
-
-from django.contrib.auth import views as auth_views
-
 admin.autodiscover()
+import grappelli
 
 from filebrowser.sites import site
 
@@ -17,7 +15,6 @@ from lltsite.views import (
     ItemView, 
     ItemViewFull,
     PageView,
-    PageUpdateView,
     PageViewPrivate,
     KeywordBrowseView,
     SearchHaystackView,
@@ -71,9 +68,6 @@ urlpatterns = [
 
     url(r'^page/(?P<pk>\d+)/$',
      PageView.as_view(), name='page_view'),
-
-    url(r'^page/edit/(?P<pk>\d+)/$',
-     PageUpdateView.as_view(), name='page_update_view'),
 
     url(r'^keys/$',
      KeywordBrowseView.as_view(), name='keyword_browse_view'),
@@ -154,9 +148,6 @@ urlpatterns = [
     url(r'^admin/filebrowser/', site.urls),
     url(r'^grappelli/', include('grappelli.urls')), # grappelli URLS
     url(r'^admin/', admin.site.urls, name='index'),
-
-    url(r'^login/$', auth_views.LoginView.as_view(), name='login_user'),
-    url(r'^logout/$', auth_views.LogoutView.as_view(next_page='/'), name='logout_user'),
 
     url(r'^(?P<slug>[-\w]+)/$',
      PageView.as_view(), name='page_slug_view'),

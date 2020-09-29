@@ -145,4 +145,8 @@ manage.py
 
 .IDEA/
 
+.DS_Store
+
+settings.py
+
 

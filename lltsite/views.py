@@ -21,7 +21,7 @@ from haystack.generic_views import SearchView
 from oaiharvests.models import Community, Collection, Record, MetadataElement
 from .models import StoryPage, Subscriber, ImpactFactor
 from .mixins import RecordSearchMixin
-from .forms import CreateSubscriberForm, UpdateImpactFactorForm
+from .forms import CreateSubscriberForm, UpdateImpactFactorForm, PageUpdateForm
 
 
 class HomeView(TemplateView):
@@ -131,6 +131,12 @@ class PageView(DetailView):
         context['curr_page'] = self.get_object().id
         return context
 
+
+class PageUpdateView(LoginRequiredMixin, UpdateView):
+    model = StoryPage
+    template_name = 'page_view_update.html'
+    form_class = PageUpdateForm
+    
 
 class PageViewPrivate(LoginRequiredMixin, DetailView):
     model = StoryPage

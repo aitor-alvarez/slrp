@@ -14,8 +14,10 @@
     <!-- <script src="https://use.fontawesome.com/0d555f8c65.js"></script>-->
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" crossorigin="anonymous">
+
+    <!-- Rich Text Editor -->
+       
     <!-- Site-wide css -->
     <link href="{% static 'css/base.css' %}" rel="stylesheet">
 
@@ -40,10 +42,10 @@
                 </button>
                 
                 <ul class="nav navbar-nav">
-                    <li><a class="navbar-brand" href="{% url 'home' %}"><img height="70px" style="margin-top: 0px; margin-left:15px" src="{% static 'img/aausc-logo.png' %}"></a></li>
+                    <li><a class="navbar-brand" href="{% url 'home' %}"><img height="70px" style="margin-top: 0px; margin-left:15px" src="{% static 'img/slrp-lockup-.png' %}"></a></li>
                     <li>
                         <h2>Second Language Research & Practice </h2>
-                        <p style="width: 480px"><i>A refereed journal addressing postsecondary language education from theoretical, empirical, and practical perspectives.</i></p>
+                        <p style="width: 480px"><i>A refereed journal of the AAUSC addressing postsecondary language education from theoretical, empirical, and practical perspectives</i></p>
                     </li>  
                 </ul>
             </div>
@@ -96,7 +98,12 @@
     <!-- Footer -->
     <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
         <div id="footer" class="container-fluid text-muted">
-            Web application programming and design: Richard Medina - Site maintained by the <a href="https://clt.manoa.hawaii.edu" target="_blank">Center for Language & Technology</a>, University of Hawai‘i at Mānoa <a href="{% url 'admin:index' %}"><i class="fa fa-lock"></i></a>
+            Web application programming and design: Richard Medina - Site maintained by the <a href="https://clt.manoa.hawaii.edu" target="_blank">Center for Language & Technology</a>, University of Hawai‘i at Mānoa 
+            {% if user.is_authenticated %}
+                <a href="{% url 'logout_user' %}"><i class="fa fa-unlock"></i></a>
+            {% else %}
+                <a href="{% url 'login_user' %}?next={{ request.path }}"><i class="fa fa-lock"></i></a>
+            {% endif %}
         </div>
     </div>
   
@@ -106,13 +113,16 @@
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   crossorigin="anonymous"></script>
     
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    
+    <script src="{% static 'js/bootstrap.min.js' %}" crossorigin="anonymous"></script>
+
+
+
     <!-- Placeholder for page level javascript includes -->
     {% block js_include %} {% endblock js_include %}
 
     <!-- Placeholder for page level javascript code -->
     {% block js_script %} {% endblock js_script %}
+
 
 </body>
 </html>
