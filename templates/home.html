@@ -61,8 +61,8 @@
 				{% endfor %}
 			</div>
 			<div class="col-md-6">
-				{% if toc.Column %}<h4 class="border-space">Columns</h4>{% endif %}
-				{% for sub_type, data in toc.Column.items %} 
+				{% if toc.Report %}<h4 class="border-space">Reports</h4>{% endif %}
+				{% for sub_type, data in toc.Report.items %} 
 					<strong>{{ sub_type }}</strong>
 					<p class="small">{% if data.editors %}Edited by{% endif %} {% for j in data.editors%} <em>{{ j }}{% if not forloop.last %}; {% endif %}</em> {% endfor %}</p>
 					{% for doc in data.records %}

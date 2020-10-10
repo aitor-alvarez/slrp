@@ -27,7 +27,7 @@ class StoryPage(TimeStampedModel):
     def get_absolute_url(self):
         return reverse('page_view', args=[str(self.id)])
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
 
@@ -42,12 +42,12 @@ class Subscriber(TimeStampedModel):
     language_teach  = models.CharField(max_length=512, blank=True,choices=languages)
     notifications_on = models.BooleanField(default=False)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.email
 
 
 class ImpactFactor(models.Model):
     current_factor = models.DecimalField(max_digits=8, decimal_places=3)
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.current_factor)
